@@ -14,4 +14,14 @@ export class ReceptifeedService {
     createRecept(recept: Recept){
         return this.receptiPostRepository.save(recept);
     }
+
+    vratiSveRecepte(){
+        return this.receptiPostRepository.find();
+    }
+    azurirajRecept(id:number,recept:Recept){
+        return this.receptiPostRepository.update(id,recept)
+    }
+    izbrisiRecept(id:number){
+        return this.receptiPostRepository.delete(id);
+    }
 }
