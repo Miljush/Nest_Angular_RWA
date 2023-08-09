@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReceptifeedModule } from './recept/recept.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { ReceptifeedModule } from './recept/recept.module';
       autoLoadEntities:true,
       synchronize:true
     }),
-    ReceptifeedModule
+    UserModule,
+    ReceptifeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
