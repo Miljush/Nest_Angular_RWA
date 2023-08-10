@@ -5,8 +5,10 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReceptifeedModule } from './recept/recept.module';
 import { UserModule } from './user/user.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
+  
   imports: [
     ConfigModule.forRoot({isGlobal:true}),
     TypeOrmModule.forRoot({
@@ -21,6 +23,7 @@ import { UserModule } from './user/user.module';
     }),
     UserModule,
     ReceptifeedModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],

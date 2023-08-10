@@ -2,7 +2,6 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { ReceptPostEntity } from '../models/recept.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Recept } from '../models/recept.interface';
 import { CreateReceptDto } from '../dto/createreceptdto';
 import { UserService } from 'src/user/services/user.service';
 import { STATUS_CODES } from 'http';
@@ -37,6 +36,17 @@ export class ReceptifeedService {
       .leftJoinAndSelect('recept.user', 'user')
       .select(['recept', 'user.id'])
       .getMany();
+    }
+    async vratiRecept(id:number){
+        const recept:ReceptPostEntity=await this.receptiPostRepository.findOneById(id);
+        if(recept!=null)
+        {
+            return recept
+        }
+        else{
+            throw new BadRequestException("Recept nije prondadjen!");
+        }
+        
     }
     azurirajRecept(id:number,recept:ReceptPostEntity){
         return this.receptiPostRepository.update(id,recept)

@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post,Put,Delete } from '@nestjs/common';
 import { ReceptifeedService } from '../services/recept.service';
-import { Recept } from '../models/recept.interface';
 import { CreateReceptDto } from '../dto/createreceptdto';
 import { ReceptPostEntity } from '../models/recept.entity';
 

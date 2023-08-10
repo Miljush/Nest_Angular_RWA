@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { UserEntity } from '../../user/models/user.entity';
+import { ReviewEntity } from 'src/review/models/review.entity';
 
 @Entity('recept')
 export class ReceptPostEntity {
@@ -25,4 +26,8 @@ export class ReceptPostEntity {
 
   @ManyToOne(type => UserEntity, user => user.recepti)
   user: UserEntity;
+
+  @OneToMany(() => ReviewEntity, review => review.recipe)
+  reviews: ReviewEntity[];
+
 }
