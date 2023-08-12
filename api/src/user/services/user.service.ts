@@ -56,14 +56,18 @@ export class UserService {
         if(user==null){
             throw new BadRequestException("Ne postoji user");
         }else{
-            if(bcrypt.compare(loginDto.sifra,user.sifra)){
+            if(await bcrypt.compare(loginDto.sifra,user.sifra)){
                 const jwt=await this.jwtService.signAsync({id:user.id,role:user.role});
                 return jwt
             }
             else{
-                throw new UnauthorizedException("pogresna lozinka");
+                throw new UnauthorizedException("pogresna lozinka ili username");
             }
         }
+    }
+    async vratiUseraCookie(data:any){
+        const user=await this.userRepository.findOneById(data.id);
+        return user;
     }
 
 

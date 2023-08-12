@@ -8,6 +8,7 @@ export class RoleMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log("Zoran");
       let cookie = req.cookies['jwt'];
       const data=await this.jwtService.verifyAsync(cookie);
       if(!data){
@@ -17,7 +18,7 @@ export class RoleMiddleware implements NestMiddleware {
       if (userRole === 'user') {
         next();
       } else {
-        throw new Error('Unauthorized MILOS');
+        throw new Error('Unauthorized');
       }
     } catch (error) {
       return res.status(401).json({ message: 'Unauthorized'+error });
