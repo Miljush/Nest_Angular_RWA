@@ -47,27 +47,22 @@ export class UserService {
         }
         
     }
-    async findOne(username: string){
-        return await this.userRepository.createQueryBuilder('user').where("user.username=:name",{name:username}).getOne();
+    async findUserByUsername(username: string){
+        return await this.userRepository.findOneBy({username:username});
       }
     async login(loginDto:LoginDto){
-        const user:UserEntity=await this.userRepository.createQueryBuilder('user').where("user.username=:name",{name:loginDto.username}).getOne();
-        
-        if(user==null){
-            throw new BadRequestException("Ne postoji user");
-        }else{
-            if(await bcrypt.compare(loginDto.sifra,user.sifra)){
-                const jwt=await this.jwtService.signAsync({id:user.id,role:user.role});
-                return jwt
-            }
-            else{
-                throw new UnauthorizedException("pogresna lozinka ili username");
-            }
-        }
+        const user:UserEntity=await this.userRepository.createQueryBuilder('user').where("user.username=:name",{name:loginDto.username}).getOne();  
+        const jwt=await this.jwtService.signAsync({id:user.id,role:user.role});
+        return jwt
     }
     async vratiUseraCookie(data:any){
         const user=await this.userRepository.findOneById(data.id);
-        return user;
+        if (user) {
+            const { sifra, ...userBezSifre } = user;
+            return userBezSifre;
+        }
+        return undefined;
+    
     }
 
 

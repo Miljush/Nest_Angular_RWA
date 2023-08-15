@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,26 +19,40 @@ interface ApiResponse {
 export class LoginComponent implements OnInit {
   users: any[] = [];
   user:any;
+  form:FormGroup;
+  
+  
+  
 
-  constructor(private authService: AuthenticationService, private http: HttpClient,private cookieService: CookieService,private userService:UserService) {}
+  constructor(private authService: AuthenticationService, private http: HttpClient,private cookieService: CookieService,private userService:UserService,private router: Router) {
+    this.form = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+    });
+  }
 
   async login() {
-    const credentials = {
-      username:"milos1234",
-      sifra:"milos1234"
-    };
+    const credentials=this.form.value;
   
-    await this.authService.login(credentials);
-    const jwt = this.cookieService.get('jwt');
+    (await this.authService.login(credentials)).subscribe(
+      async (response) => {
+        await this.vratiUseraZaCookie();
+        this.router.navigate(['']);
+      },
+      () => {
+        alert('pogresna sifra ili username');
+      }
+    );
+    
+    
   }
   async logout(){
     this.authService.logout();
+    localStorage.removeItem("loggedUser");
   }
   async ngOnInit() {
-      const response=await this.userService.vratiSveUsere();
-      response.forEach(res => {
-        this.users.push(res);
-      });
+    
+     
 
   }
   async vratiSveUsere(){
@@ -47,10 +63,10 @@ export class LoginComponent implements OnInit {
     
   }
   async vratiUseraZaCookie(){
-    const user=await (await this.userService.vratiUseraZaCookie()).subscribe(
+    await (await this.userService.vratiUseraZaCookie()).subscribe(
       async (data:any)=>{
         this.user=await data;
-        console.log(this.user);
+        localStorage.setItem("loggedUser",JSON.stringify(this.user));
       }
     )
   }

@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards,UseInterceptors  } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards,UseInterceptors,Request  } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../models/user.entity';
 import { LoginDto } from '../dto/loginDto';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UserController {
@@ -11,6 +12,7 @@ export class UserController {
 
     @Post('register')
     register(@Body() user: UserEntity){
+            console.log(user);
             return this.userService.createUser(user);
     }
     @Get('vratiSveUsere')
@@ -23,20 +25,17 @@ export class UserController {
     }
     @Get('vratiUseraZaCookie')
     async vratiUseraCookie(@Req() request: any){
-        console.log("uso sam")
         let cookie = request.cookies['jwt'];
         const data=await this.jwtService.verifyAsync(cookie);
-        console.log(data);
         const userbaza=await this.userService.vratiUseraCookie(data);
-        console.log(userbaza);
         return userbaza;
     }
+    @UseGuards(AuthGuard('local'))
     @Post('login')
-    async login(@Body() loginDto:LoginDto, 
-                @Res({passthrough:true}) response:Response ){
-        const token=await this.userService.login(loginDto);
-        response.cookie('jwt',token,{httpOnly:true});
-        return {message:'success'};
+    async login(@Body() loginDto:LoginDto,@Res({ passthrough: true }) response: Response){
+       const token=await this.userService.login(loginDto);
+       response.cookie('jwt',token,{httpOnly:true});
+       return {message:'success'}
     }
     @Post('logout')
     async logout(@Res({ passthrough: true }) response: Response) {

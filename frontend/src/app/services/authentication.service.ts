@@ -10,14 +10,13 @@ export class AuthenticationService {
   
   constructor(private cookieService: CookieService,private http:HttpClient) { }
 
-  async login(credentials: any): Promise<any> {
+  async login(credentials: any) {
     const url = 'http://localhost:3000/user/login';
 
     const response = await this.http.post(url, credentials, {
       responseType: 'text', // Receive the response as text (including the cookie)
       withCredentials: true, // Send cookies with the request
-    }).toPromise();
-
+    });
     return response;
   }
   async logout(): Promise<any> {

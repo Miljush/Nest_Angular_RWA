@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReceptifeedModule } from './recept/recept.module';
 import { UserModule } from './user/user.module';
 import { ReviewModule } from './review/review.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   
@@ -24,6 +25,7 @@ import { ReviewModule } from './review/review.module';
     UserModule,
     ReceptifeedModule,
     ReviewModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

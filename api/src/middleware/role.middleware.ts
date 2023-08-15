@@ -1,4 +1,4 @@
-import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { JwtService } from '@nestjs/jwt';
 
@@ -8,7 +8,6 @@ export class RoleMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log("Zoran");
       let cookie = req.cookies['jwt'];
       const data=await this.jwtService.verifyAsync(cookie);
       if(!data){
@@ -18,10 +17,10 @@ export class RoleMiddleware implements NestMiddleware {
       if (userRole === 'user') {
         next();
       } else {
-        throw new Error('Unauthorized');
+        throw new ForbiddenException();
       }
     } catch (error) {
-      return res.status(401).json({ message: 'Unauthorized'+error });
+      throw new ForbiddenException();
     }
   }
 }

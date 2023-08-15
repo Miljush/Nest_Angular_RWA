@@ -22,5 +22,19 @@ export class UserService {
     })
     return await user
   }
+  async kreirajUsera(credentials:any): Promise<boolean>{
+    console.log(credentials);
+    const url = 'http://localhost:3000/user/register';
+    try {
+      await this.http.post(url, credentials, {
+        withCredentials: true
+      }).toPromise();
+  
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
 }
 
