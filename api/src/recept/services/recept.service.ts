@@ -38,14 +38,11 @@ export class ReceptifeedService {
       .getMany();
     }
     async vratiRecept(id:number){
-        const recept:ReceptPostEntity=await this.receptiPostRepository.findOneById(id);
-        if(recept!=null)
-        {
-            return recept
-        }
-        else{
-            throw new BadRequestException("Recept nije prondadjen!");
-        }
+        return this.receptiPostRepository.createQueryBuilder('recept')
+        .leftJoinAndSelect('recept.user', 'user')
+        .select(['recept', 'user.username'])
+        .where('recept.id = :receptId', { receptId:id })
+        .getOne();
         
     }
     azurirajRecept(id:number,recept:ReceptPostEntity){
@@ -64,5 +61,12 @@ export class ReceptifeedService {
     }
     izbrisiRecept(id:number){
         return this.receptiPostRepository.delete(id);
+    }
+    async vratiRecepteZaUsera(id:number){
+        return this.receptiPostRepository.createQueryBuilder('recept')
+        .leftJoinAndSelect('recept.user', 'user')
+        .select(['recept'])
+        .where('user.id = :userId', { userId:id })
+        .getMany();
     }
 }

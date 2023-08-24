@@ -16,11 +16,16 @@ export class UserService {
     })
     return response;
   }
-  async vratiUseraZaCookie(){
-    const user=await this.http.get('http://localhost:3000/user/vratiUseraZaCookie',{
+  vratiUseraZaCookie(){
+    const user= this.http.get('http://localhost:3000/user/vratiUseraZaCookie',{
       withCredentials:true
     })
-    return await user
+    return user
+  }
+  vratiLoggedStatus():Observable<boolean>{
+    return this.http.get<boolean>('http://localhost:3000/user/vratiLoggedStatus',{
+      withCredentials:true
+    })
   }
   async kreirajUsera(credentials:any): Promise<boolean>{
     console.log(credentials);
@@ -35,6 +40,9 @@ export class UserService {
       console.error(error);
       return false;
     }
+  }
+  vratiUsera(){
+    return this.http.get<any>('http://localhost:3000/user/vratiUsera')
   }
 }
 

@@ -16,6 +16,14 @@ export class ReceptifeedController {
     vratiSveRecepte(){
         return this.receptService.vratiSveRecepte();
     }
+    @Get('vratiRecept/:id')
+    vratiRecept(@Param('id') id:number){
+        return this.receptService.vratiRecept(id);
+    }
+    @Get('vratiRecepteZaUsera/:id')
+    vratiRecepteZaUsera(@Param('id') id:number){
+        return this.receptService.vratiRecepteZaUsera(id);
+    }
     @Put('azurirajRecept/:id')
     azurirajRecept(
         @Param('id') id:number,

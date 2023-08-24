@@ -34,5 +34,22 @@ export class ReviewService {
         review.user=user;
         return this.reviewRepository.save(review);
     }
+    async  getReviewsWithUserInfo(id:number){
+      
+        return this.reviewRepository
+          .createQueryBuilder('review')
+          .leftJoinAndSelect('review.user', 'user')
+          .where('review.recipe.id = :recipeId', { recipeId:id })
+          .orderBy('review.createdAt', 'DESC')
+          .select([
+            'review',
+            'user.username',
+            'user.slika',
+            'user.ime', 
+            'user.prezime',     
+          ])
+          .getMany();
+      
+      }
 
 }

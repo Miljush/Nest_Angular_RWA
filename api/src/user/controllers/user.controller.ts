@@ -30,6 +30,21 @@ export class UserController {
         const userbaza=await this.userService.vratiUseraCookie(data);
         return userbaza;
     }
+    @Get('vratiLoggedStatus')
+    async vratiLoggedStatus(@Req() request: any){
+        let cookie = request.cookies['jwt'];
+        try{const data=await this.jwtService.verifyAsync(cookie);
+            const userbaza=await this.userService.vratiUseraCookie(data);
+            if(userbaza){
+                return true
+            }else{
+                return false
+            }}
+            catch{
+                return false
+            }
+        
+    }
     @UseGuards(AuthGuard('local'))
     @Post('login')
     async login(@Body() loginDto:LoginDto,@Res({ passthrough: true }) response: Response){

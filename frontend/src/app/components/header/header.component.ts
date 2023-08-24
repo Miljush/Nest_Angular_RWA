@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Emitters } from 'src/app/emitters/emitters';
+import { Store, select } from '@ngrx/store';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserStateInterface } from 'src/app/store/types/user.interface';
+import * as UserActions from '../../store/actions/user.actions';
+import { selectUserFeature, selectorLoggedin } from 'src/app/store/selectors/user.selectors';
+import { Observable } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -9,25 +14,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit{
-  imageSrc: string="";
-  authenticated = true;
-  constructor(private authService: AuthenticationService,private router: Router){}
-  ngOnInit(): void {
-    const userLocal=localStorage.getItem("loggedUser");
-    if(userLocal){
-      const userdata=JSON.parse(userLocal);
-      this.imageSrc=userdata.slika;
-    }
-    Emitters.authEmmiter.subscribe(
-      ( auth:boolean) =>{
-        this.authenticated=auth;
-      }
-    )
+  isLoggedIn$:Observable<boolean>;
+  constructor(private authService: AuthenticationService,private router: Router,private store:Store<UserStateInterface>,private readonly userService:UserService){
+    this.isLoggedIn$=this.store.select(selectorLoggedin);
   }
-  async logout(): Promise<void>{
-    localStorage.removeItem('loggedUser')
-    await this.authService.logout();
-    this.authenticated=!this.authenticated;
-    this.router.navigate(["/login"])
+  ngOnInit(): void {
+    
+  }
+  logout(){
+    this.store.dispatch(UserActions.logoutUser());
   }
 }

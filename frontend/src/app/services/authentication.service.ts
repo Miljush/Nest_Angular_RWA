@@ -10,23 +10,25 @@ export class AuthenticationService {
   
   constructor(private cookieService: CookieService,private http:HttpClient) { }
 
-  async login(credentials: any) {
+   login(credentials: any):Observable<string> {
     const url = 'http://localhost:3000/user/login';
 
-    const response = await this.http.post(url, credentials, {
-      responseType: 'text', // Receive the response as text (including the cookie)
-      withCredentials: true, // Send cookies with the request
+    return this.http.post<string>(url,credentials,{
+      withCredentials:true
     });
-    return response;
   }
-  async logout(): Promise<any> {
-    const url = 'http://localhost:3000/user/logout';
-
-    await this.http.post(url, null, {
-      withCredentials: true, // Send cookies with the request
-    }).toPromise();
+  logout(): Observable<any> {
+    localStorage.removeItem('loggedUser');
+    return this.http.post(
+      'http://localhost:3000/user/logout',
+      {},
+      {
+        withCredentials: true,
+      }
+    );
   }
-  
-
-  
 }
+  
+
+  
+

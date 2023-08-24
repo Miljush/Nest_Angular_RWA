@@ -14,6 +14,9 @@ export class ReceptPostEntity {
   @Column({ default: '' })
   opis?: string;
 
+  @Column({ default: '' })
+  priprema?: string;
+
   @Column('text', { array: true, nullable: true })
   sastojci: string[];
 

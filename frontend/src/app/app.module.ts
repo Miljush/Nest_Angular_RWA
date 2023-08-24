@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,16 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SviReceptiComponent } from './components/svi-recepti/svi-recepti.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './store/reducers/user.reducers';
+import { UserEffects } from './store/effects/user.effects';
+import { ReceptDetaljnoComponent } from './components/recept-detaljno/recept-detaljno.component';
+import { SwiperComponent } from './components/swiper/swiper.component';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +36,10 @@ import { ProfileComponent } from './components/profile/profile.component';
     HeaderComponent,
     HomeComponent,
     FooterComponent,
-    ProfileComponent
+    ProfileComponent,
+    SviReceptiComponent,
+    ReceptDetaljnoComponent,
+    SwiperComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +50,10 @@ import { ProfileComponent } from './components/profile/profile.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    FlexLayoutModule,
+    StoreModule.forRoot({user:reducers}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([UserEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ReviewService } from '../services/review.service';
 import { CreateReviewDto } from '../dto/createReviewDto';
 
@@ -10,5 +10,9 @@ export class ReviewController {
     kreirajReview(@Body() createReviewDto:CreateReviewDto ) {
         return this.reviewService.kreirajReview(createReviewDto);
       }
+    @Get('vratiKomentareZaId/:id')
+    vratiKomentareZaId(@Param('id') id:number){
+      return this.reviewService.getReviewsWithUserInfo(id);
+  }
 
 }

@@ -1,0 +1,65 @@
+.swiper {
+    position: relative; /* Set the position to relative */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px; /* Set your desired width */
+    height: 600px; /* Set your desired height */
+    border: 1px solid #ccc;
+    overflow: hidden; /* Hide any overflow to prevent image stretching */
+  }
+  
+  .swiper-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Scale the image to cover the container */
+  }
+  
+  .swiper-buttons {
+    position: absolute;
+    top: 50%; /* Position buttons vertically at 50% from the top */
+    transform: translateY(-50%); /* Adjust to vertically center the buttons */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between; /* Add space between the buttons */
+    padding: 0 10px; /* Add some padding to the buttons for better spacing */
+  }
+  
+  button {
+    margin: 0;
+  }
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #333; /* Change the color as needed */
+    fill: currentColor; /* Set SVG fill to inherit color from button */
+  }
+  .rotate-icon {
+    transform: rotate(180deg); /* Rotate the icon 180 degrees */
+    transition: transform 0.3s ease; /* Add smooth transition */
+  }
+  
+  .icon-button:hover .rotate-icon {
+    transform: rotate(180deg) scale(1.5); /* Rotate and scale on hover */
+  }
+  .nonrotate-icon { /* Rotate the icon 180 degrees */
+    transition: transform 0.3s ease; /* Add smooth transition */
+  }
+  
+  .icon-button:hover .nonrotate-icon {
+    transform: scale(1.5); /* Rotate and scale on hover */
+  }
+
+  
+  
+  
+  
+  
+  

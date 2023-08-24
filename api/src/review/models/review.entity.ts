@@ -14,6 +14,9 @@ export class ReviewEntity {
     @Column({ default: '' })
     komentar?: string;
 
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
+
     @ManyToOne(() => UserEntity, user => user.reviews)
     user: UserEntity;
 
