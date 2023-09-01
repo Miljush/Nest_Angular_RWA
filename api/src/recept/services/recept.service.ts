@@ -31,11 +31,7 @@ export class ReceptifeedService {
       }
 
     vratiSveRecepte(){
-        return this.receptiPostRepository
-      .createQueryBuilder('recept')
-      .leftJoinAndSelect('recept.user', 'user')
-      .select(['recept', 'user.id'])
-      .getMany();
+        return this.receptiPostRepository.find();
     }
     async vratiRecept(id:number){
         return this.receptiPostRepository.createQueryBuilder('recept')

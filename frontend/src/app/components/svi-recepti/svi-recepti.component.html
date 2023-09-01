@@ -1,8 +1,8 @@
 
 <div style="padding-top: 130px; justify-content: center;" fxLayout="row wrap" fxLayoutGap="16px">
-    <div *ngFor="let recept of recepts" class="recept-card" [routerLink]="['/recept', recept.id]">
+    <div *ngFor="let recept of recepts$ | async" class="recept-card" [routerLink]="['/recept', recept.id]">
         <div class="image-container">
-            <img [src]="recept.slike[0]" alt="{{ recept.ime }}" />
+            <img [src]="recept.slike?.[0]" alt="{{ recept.ime }}" />
         </div>
       <div class="recept-details">
         <h2>{{ recept.ime }}</h2>

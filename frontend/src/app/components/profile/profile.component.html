@@ -32,7 +32,7 @@
           <div class="bg-light p-4 d-flex justify-content-end text-center">
             <ul class="list-inline mb-0">
               <li class="list-inline-item">
-                <h5 class="font-weight-bold mb-0 d-block">{{recepti.length}}</h5>
+                <h5 class="font-weight-bold mb-0 d-block">{{(recepti$ | async)?.length}}</h5>
                 <small class="text-muted">
                   <i class="fas fa-image mr-1"></i>Recepata</small
                 >
@@ -65,9 +65,9 @@
               <a href="#" class="btn btn-link text-muted">Show all</a>
             </div>
             <div class="row">
-                <div style="padding-bottom: 10px;" class="col-lg-6 mb-2 pr-lg-1" *ngFor="let recept of recepti">
+                <div style="padding-bottom: 10px;" class="col-lg-6 mb-2 pr-lg-1" *ngFor="let recept of (recepti$ | async)">
                   <img
-                    [src]="recept.slike[0]"
+                    [src]="recept.slike?.[0]"
                     alt=""
                     class="img-fluid rounded shadow-sm cropped-image"
                   />

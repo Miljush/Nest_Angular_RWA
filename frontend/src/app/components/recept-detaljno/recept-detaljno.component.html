@@ -23,13 +23,13 @@
                   </div>
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-6">
-                    <h2 class="box-title mt-5">{{recept.ime}}</h2>
-                    <p>{{recept.opis}}</p>
+                    <h2 class="box-title mt-5">{{(recept$ | async)?.ime}}</h2>
+                    <p>{{(recept$ | async)?.opis}}</p>
                     <h2 class="mt-5">
                         Priprema
                     </h2>
                     <h3>
-                        {{recept.priprema}}
+                        {{(recept$ | async)?.priprema }}
                     </h3>
                     
                     
@@ -39,7 +39,7 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-product">
                             <tbody>
-                              <tr *ngFor="let sastojak of recept.sastojci">
+                              <tr *ngFor="let sastojak of (recept$ | async)?.sastojci">
                                 <td width="390">{{ sastojak }}</td>
                               </tr>
                             </tbody>
@@ -54,7 +54,7 @@
                             <div class="">
                               <h4 class="mb-0">Poslednji komentari</h4>
                               
-                              <div *ngFor="let review of reviews" class="card mb-3">
+                              <div *ngFor="let review of reviews$ | async" class="card mb-3">
                                 <div class="card-body p-4">
                                   <div class="d-flex flex-start">
                                     <img class="rounded-circle shadow-1-strong me-3"
@@ -70,10 +70,10 @@
                                           {{ review.createdAt | date:'mediumDate' }}
                                           <span [ngClass]="{
                                             'badge': true,
-                                            'bg-primary': review.user.username === recept.user.username,
-                                            'bg-success': review.user.username !== recept.user.username,
+                                            'bg-primary': review.user.username === (recept$ | async)?.user.username,
+                                            'bg-success': review.user.username !== (recept$ | async)?.user.username,
                                           }">
-                                            {{ review.user.username === recept.user.username ? 'Vlasnik' : 'Korisnik' }}
+                                            {{ review.user.username === (recept$ | async)?.user.username ? 'Vlasnik' : 'Korisnik' }}
                                           </span>
                                         </p>
                                         
