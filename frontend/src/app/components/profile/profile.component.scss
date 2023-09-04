@@ -85,3 +85,17 @@ form {
   transition: 0.3s;
   width: 100%;
 }
+.form-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.form-container.open {
+  max-height: 1000px; /* Adjust the maximum height as needed */
+}
+
+/* Other styles for your form elements */
+.dodajForm-control {
+  margin-bottom: 20px;
+}

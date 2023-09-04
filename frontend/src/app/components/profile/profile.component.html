@@ -69,8 +69,8 @@
               
             </div>
             <div>
-              <div>
-                <form *ngIf="isOpen" [formGroup]="dodajForm" autocomplete="new-password">
+              <div  class="form-container" [ngClass]="{'open': isOpen}">
+                <form  [formGroup]="dodajForm" autocomplete="new-password">
                   <h1>Novi recept</h1>
                   
                   <div class="dodajForm-control">

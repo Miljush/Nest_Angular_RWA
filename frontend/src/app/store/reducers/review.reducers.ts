@@ -24,4 +24,9 @@ export const reviewReducers=createReducer(
         return adapter.addMany(action.reviews, {...state, isLoading:false})
     }),
     on(ReviewActions.vratiRevieweZaReceptFailure,(state,action)=>({...state,isLoading:false,error:action.error})),
+    on(ReviewActions.kreirajReview,(state)=>({...state,isLoading:true})),
+    on(ReviewActions.kreirajReviewSuccess,(state,action)=>{
+        return adapter.addOne(action.review, {...state, isLoading:false})
+    }),
+    on(ReviewActions.kreirajReviewFailure,(state,action)=>({...state,isLoading:false,error:action.error})),
     )

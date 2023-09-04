@@ -29,3 +29,28 @@ export class Review implements ReviewInt {
       this.user = user;
     }
   }
+
+  export interface KomentarInt{
+    starRating?: number;
+    komentar?: string;
+    userId?: number;
+    receptId?: number;
+}
+export class KomentarAdd implements KomentarInt {
+    userId?: number;
+    starRating?: number;
+    komentar?: string;
+    receptId?:number;
+    constructor(
+      userId?: number,
+        starRating?: number,
+        komentar?: string,
+        receptId?:number
+  
+    ) {
+      this.userId = userId;
+      this.starRating = starRating;
+      this.komentar = komentar;
+      this.receptId = receptId;
+    }
+  }

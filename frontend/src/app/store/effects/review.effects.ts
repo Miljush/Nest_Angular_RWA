@@ -19,5 +19,15 @@ export class ReviewEffects{
         })
     )
     )
+    dodajReview$ = createEffect(()=>
+    this.actions$.pipe(
+        ofType(ReviewActions.kreirajReview),
+        mergeMap((action)=>this.reviewService.dodajReview(action.review).pipe(
+            map((review)=>ReviewActions.kreirajReviewSuccess({review})),
+            catchError((error)=>
+            of(ReviewActions.kreirajReviewFailure({error: error.message})))
+        ))
+    )
+    )
     constructor(private actions$: Actions,private reviewService: ReviewService,private router: Router){}
 }

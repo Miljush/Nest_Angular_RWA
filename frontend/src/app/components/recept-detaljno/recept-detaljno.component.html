@@ -53,6 +53,41 @@
                           <div class="card text-dark">
                             <div class="">
                               <h4 class="mb-0">Poslednji komentari</h4>
+                              <form [formGroup]="form" (submit)="dodajKomentar()" autocomplete="new-password">
+                                <div class=" text-dark">
+                                  <div class="row d-flex justify-content-center">
+                                    <div >
+                                      <div class="card">
+                                        <div class="card-body p-4">
+                                          <div class="d-flex flex-start w-100">
+                                            <img class="rounded-circle shadow-1-strong me-3"
+                                            [src]="imageSrc"
+                                            alt="review.user.photo"
+                                            width="60"
+                                            height="60"
+                                            style="object-fit: cover;" />
+                                            <div class="w-100">
+                                              <h5>Dodaj komentar</h5>
+                                              <h3>Ocena</h3>
+                                              <input formControlName="starRating" type="number" id="starRating" name="numberInput" min="1" max="5">
+                                              <div class="form-outline">
+                                                <textarea formControlName="komentar" class="form-control" id="komentar" rows="4"></textarea>
+                                                <label class="form-label" for="textAreaExample">Sta ti je na umu?</label>
+                                              </div>
+                                              <div class="d-flex justify-content-between mt-3">
+                                                <div></div>
+                                                <button type="submit" class="btn btn-success end-button">
+                                                  Send 
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </form>
                               
                               <div *ngFor="let review of reviews$ | async" class="card mb-3">
                                 <div class="card-body p-4">
@@ -78,6 +113,10 @@
                                         </p>
                                         
                                       </div>
+                                      <div>
+                                        Ocena {{review.starRating}}
+                                      </div>
+
                                       <p class="mb-0">{{ review.komentar }}</p>
                                     </div>
                                   </div>

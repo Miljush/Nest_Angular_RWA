@@ -45,3 +45,6 @@ body{
     transform: translate(-50%, -50%);
   }
   .link-muted { color: #aaa; } .link-muted:hover { color: #1266f1; }
+  .end-button {
+    align-self: flex-end;
+  }

@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store"
-import { Review } from "../types/komentar"
+import { KomentarAdd, Review } from "../types/komentar"
 
 
 
@@ -13,5 +13,17 @@ export const vratiRevieweZaReceptSuccess=createAction(
 )
 export const vratiRevieweZaReceptFailure=createAction(
     '[ReceptDetaljno Page] VratiZaRecept Review failure',
+    props<{error:string}>()
+)
+export const kreirajReview=createAction(
+    '[Detaljno Page] KreirajReview Review',
+    props<{review:KomentarAdd}>()
+)
+export const kreirajReviewSuccess=createAction(
+    '[Detaljno Page] KreirajReview Review success',
+    props<{review:KomentarAdd}>()
+)
+export const kreirajReviewFailure=createAction(
+    '[Detaljno Page] KreirajReview Review failure',
     props<{error:string}>()
 )
