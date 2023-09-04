@@ -4,7 +4,7 @@ import { UserStateInterface } from "../types/user.interface";
 import { createReducer, on } from "@ngrx/store";
 import * as ReceptActions from '../actions/recept.actions';
 import { Recept } from "../types/recept";
-import { ReceptSingleStateInterface, ReceptStateInterface, ReceptiUserStateInterface } from "../types/recept.interface";
+import { ReceptDodajInterface, ReceptSingleStateInterface, ReceptStateInterface, ReceptiUserStateInterface } from "../types/recept.interface";
 
 
 export const adapter:EntityAdapter<Recept>=createEntityAdapter<Recept>();
@@ -14,6 +14,11 @@ export const initialState:ReceptStateInterface=adapter.getInitialState({
     error:null,
 })
 export const initialStateZaUsera:ReceptiUserStateInterface=adapter.getInitialState({
+    isLoading:false,
+    error:null,
+})
+
+export const initialStateZaDodavanje:ReceptDodajInterface=adapter.getInitialState({
     isLoading:false,
     error:null,
 })
@@ -48,4 +53,9 @@ export const recptiZaUseraReducers=createReducer(
         return adapter.addMany(action.recepts, {...state, isLoading:false})
     }),
     on(ReceptActions.vratiRecepteZaUseraFailure,(state,action)=>({...state,isLoading:false,error:action.error})),
+    on(ReceptActions.kreirajRecept,(state)=>({...state,isLoading:true})),
+    on(ReceptActions.kreirajReceptSuccess,(state,action)=>{
+        return adapter.addOne(action.recept, {...state, isLoading:false})
+    }),
+    on(ReceptActions.kreirajReceptFailure,(state,action)=>({...state,isLoading:false,error:action.error})),
 )

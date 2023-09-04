@@ -10,6 +10,7 @@ export class ReceptifeedController {
 
     @Post('createRecept')
     create(@Body() createReceptDto: CreateReceptDto) {
+        console.log(createReceptDto);
         return this.receptService.createRecept(createReceptDto);
       }
     @Get('vratiSveRecepte')

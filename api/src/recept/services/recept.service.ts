@@ -26,6 +26,7 @@ export class ReceptifeedService {
         recept.opis=createReceptDto.opis;
         recept.sastojci=createReceptDto.sastojci;
         recept.slike=createReceptDto.slike;
+        recept.priprema=createReceptDto.priprema;
     
         return this.receptiPostRepository.save(recept);
       }

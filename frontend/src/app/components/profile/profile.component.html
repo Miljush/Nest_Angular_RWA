@@ -59,11 +59,78 @@
               <p class="font-italic mb-0">Photographer</p>
             </div>
           </div>
+          <div>
+            
+          </div>
           <div class="py-4 px-4">
             <div class="d-flex align-items-center justify-content-between mb-3">
-              <h5 class="mb-0">Recent photos</h5>
-              <a href="#" class="btn btn-link text-muted">Show all</a>
+              <h5 class="mb-0">Poslednji recepti</h5>
+              <button class="btn btn-link text-muted" (click)="toggleForm()">Dodaj Recept</button>
+              
             </div>
+            <div>
+              <div>
+                <form *ngIf="isOpen" [formGroup]="dodajForm" autocomplete="new-password">
+                  <h1>Novi recept</h1>
+                  
+                  <div class="dodajForm-control">
+                    <label for="imeRecept">Ime</label>
+                    <input
+                      formControlName="imeRecept"
+                      id="imeRecept"
+                      autocomplete="new-password"
+                    />
+                  </div>
+              
+                  <div class="dodajForm-control">
+                    <label for="opis">Opis</label>
+                    <textarea
+                      formControlName="opis"
+                      id="opis"
+                      autocomplete="new-password"
+                    ></textarea>
+                  </div>
+                  <div>
+                    Sastojci
+                  </div>
+                  <ng-container formArrayName="sastojci">
+                    <ng-container *ngFor="let sastojciForm of sastojci.controls; let index = index">
+                        <div [formGroupName]="index">
+                        <input id="imesastojka" type="text" formControlName="imesastojka" />  
+                        <button class="btn btn-link text-muted" (click)="removeSastojci(index)">Ukloni</button>          
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <button class="btn btn-link text-muted" type="button" (click)="addSastojci()">Dodaj sastojak</button>
+              
+                  <div class="dodajForm-control">
+                    <label for="priprema">Priprema</label>
+                    <textarea
+                      formControlName="priprema"
+                      id="priprema"
+                      autocomplete="new-password"
+                    ></textarea>
+                  </div>
+                  <ng-container formArrayName="slike">
+                    <ng-container *ngFor="let slikeForm of slike.controls; let index = index">
+                        <div [formGroupName]="index">
+                        <input id="inputslika" type="file" (change)="onFileChange($event)" formControlName="inputslika" />  
+                        <button class="btn btn-link text-muted" (click)="removeSlike(index)">Ukloni</button>          
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <div style="display: flex; flex-direction: column;">
+                  <div>
+                  <button class="btn btn-link text-muted" type="button" (click)="addSlike()">Dodaj Sliku</button>
+                  </div>
+
+
+                  <button class="btn-book-a-tablee" (click)="dodaj()">Kreiraj Recept</button>
+                </div>
+                  
+                </form>
+              </div>
+          </div>
             <div class="row">
                 <div style="padding-bottom: 10px;" class="col-lg-6 mb-2 pr-lg-1" *ngFor="let recept of (recepti$ | async)">
                   <img

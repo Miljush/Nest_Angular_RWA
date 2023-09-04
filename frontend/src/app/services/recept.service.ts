@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Recept } from '../store/types/recept';
+import { Recept, ReceptAdd } from '../store/types/recept';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,20 @@ export class ReceptService {
   vratiRecepteZaUsera(id:number):Observable<any[]>{
     return this.http.get<any[]>(`http://localhost:3000/recept/vratiRecepteZaUsera/${id}`,{
       withCredentials:true,
+    })
+  }
+  dodajRecept(recept:ReceptAdd):Observable<Recept>{
+    console.log(recept.priprema);
+    const receptData = {
+      id: recept.id,
+      ime: recept.ime,
+      opis: recept.opis,
+      priprema: recept.priprema,
+      sastojci: recept.sastojci,
+      slike:recept.slike
+    }
+    return this.http.post<Recept>('http://localhost:3000/recept/createRecept',receptData,{
+      withCredentials: true, 
     })
   }
 }

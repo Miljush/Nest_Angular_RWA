@@ -43,6 +43,16 @@ export class ReceptEffects{
         })
     )
     )
+    dodajRecept$ = createEffect(()=>
+    this.actions$.pipe(
+        ofType(ReceptActions.kreirajRecept),
+        mergeMap((action)=>this.receptService.dodajRecept(action.recept).pipe(
+            map((recept)=>ReceptActions.kreirajReceptSuccess({recept})),
+            catchError((error)=>
+            of(ReceptActions.kreirajReceptFailure({error: error.message})))
+        ))
+    )
+    )
 
 
     constructor(private actions$: Actions,private receptService: ReceptService,private router: Router){}

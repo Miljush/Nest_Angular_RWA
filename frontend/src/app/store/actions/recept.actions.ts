@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Recept } from "../types/recept";
+import { Recept, ReceptAdd } from "../types/recept";
 
 export const vratiRecepte=createAction(
     '[SviRecepti Page] VratiSve Recept',
@@ -34,5 +34,17 @@ export const vratiRecepteZaUseraSuccess=createAction(
 )
 export const vratiRecepteZaUseraFailure=createAction(
     '[ReceptDetaljno Page] VratiZaUsera Recept failure',
+    props<{error:string}>()
+)
+export const kreirajRecept=createAction(
+    '[ProfileKreiraj Page] KreirajRecept Recept',
+    props<{recept:ReceptAdd}>()
+)
+export const kreirajReceptSuccess=createAction(
+    '[ProfileKreiraj Page] KreirajRecept Recept success',
+    props<{recept:ReceptAdd}>()
+)
+export const kreirajReceptFailure=createAction(
+    '[ProfileKreiraj Page] KreirajRecept Recept failure',
     props<{error:string}>()
 )
