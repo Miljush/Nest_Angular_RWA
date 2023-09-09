@@ -90,3 +90,8 @@
     line-height: 20px;
     color: #ffffff;
   }
+  .pozadina{
+    background-image: url('./../../../assets/img/register.jpg');
+    background-size: cover; /* Optional: Specify how the image should be sized */
+    background-position: center;
+  }

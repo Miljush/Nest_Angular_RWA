@@ -55,3 +55,8 @@ form {
     @include focus;
   }
 }
+.pozadina{
+  background-image: url('./../../../assets/img/login.jpg');
+  background-size: cover; /* Optional: Specify how the image should be sized */
+  background-position: center;
+}

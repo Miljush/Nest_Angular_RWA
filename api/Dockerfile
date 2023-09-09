@@ -1,15 +1,10 @@
-FROM node:19
-
+FROM node:18-alpine3.14
+#postavi radni direktorijum
 WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-RUN NPM RUN BUILD
-
+#kopiraj u radni dir listu paketa za instalaciju
+COPY package*.json ./ 
+RUN npm install 
+COPY . . 
+RUN npm run build 
 EXPOSE 3000
-
-CMD ["npm","run","start:prod"]
+CMD ["npm","run","start:dev"]

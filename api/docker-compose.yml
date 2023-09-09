@@ -1,34 +1,40 @@
-version: '3.9'
+version: '3.5'
 
 services:
-  nestapp:
-    container_name: nestapp
-    image: francescoxx/nestapp:1.0.0
-    build: .
-    ports:
-      - "3000:3000" 
-    environment: 
-      - DB_TYPE=postgres
-      - PG_HOST=db  
-      - PG_USER=postgres
-      - PG_PASSWORD=sifra123
-      - PG_DB=Nest+Angular
-      - PG_PORT=5432
-    depends_on:
-      - db  
-
   db:
-    container_name: db  
-    image: postgres:12
-    ports:
-      - 5432:5432
+    image: postgres
+    restart: always
     environment:
-      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=sifra123
-      - POSTGRES_DB=Nest+Angular
+      - POSTGRES_USERNAME=postgres
+    container_name: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
 
-volumes:
-  pgdata: {}
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-docker-postgres
+    environment:
+      - PORT=${PORT}
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
 
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: nest-pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin4
+    ports:
+      - '5050:80'
+    depends_on:
+      - db

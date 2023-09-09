@@ -105,4 +105,9 @@
       width: 50%; /* Set to approximately 1/2 of the container width */ /* Flex properties for flex layout */
     }
   }
+  .pozadina{
+    background-image: url('./../../../assets/img/helbac.jpg');
+    background-size: cover; /* Optional: Specify how the image should be sized */
+    background-position: center;
+  }
   

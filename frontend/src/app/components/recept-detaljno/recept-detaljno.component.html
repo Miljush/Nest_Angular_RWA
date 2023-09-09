@@ -53,6 +53,7 @@
                           <div class="card text-dark">
                             <div class="">
                               <h4 class="mb-0">Poslednji komentari</h4>
+                              <div *ngIf="userId !== 0">
                               <form [formGroup]="form" (submit)="dodajKomentar()" autocomplete="new-password">
                                 <div class=" text-dark">
                                   <div class="row d-flex justify-content-center">
@@ -88,7 +89,7 @@
                                   </div>
                                 </div>
                               </form>
-                              
+                            </div>
                               <div *ngFor="let review of reviews$ | async" class="card mb-3">
                                 <div class="card-body p-4">
                                   <div class="d-flex flex-start">
