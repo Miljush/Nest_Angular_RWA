@@ -58,4 +58,9 @@ export const recptiZaUseraReducers=createReducer(
         return adapter.addOne(action.recept, {...state, isLoading:false})
     }),
     on(ReceptActions.kreirajReceptFailure,(state,action)=>({...state,isLoading:false,error:action.error})),
+    on(ReceptActions.izbrisiRecept,(state)=>({...state,isLoading:true})),
+    on(ReceptActions.izbrisiReceptSuccess,(state,action)=>{
+        return adapter.removeOne(action.id, {...state, isLoading:false})
+    }),
+    on(ReceptActions.izbrisiReceptFailure,(state,action)=>({...state,isLoading:false,error:action.error})),
 )

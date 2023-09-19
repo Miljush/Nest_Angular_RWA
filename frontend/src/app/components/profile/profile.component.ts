@@ -4,10 +4,14 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Store } from '@ngrx/store';
 import { Observable, finalize } from 'rxjs';
 import { ReceptService } from 'src/app/services/recept.service';
-import { vratiRecepteZaUsera,kreirajRecept } from 'src/app/store/actions/recept.actions';
+import { vratiRecepteZaUsera,kreirajRecept, izbrisiRecept } from 'src/app/store/actions/recept.actions';
+import { updateUser, vratiUsera } from 'src/app/store/actions/user.actions';
 import { selectorReceptiZaUsera } from 'src/app/store/selectors/recept.selectors';
+import { selectorErrorSingleUser, selectorLoadingSingleUser, selectorUser } from 'src/app/store/selectors/user.selectors';
 import { Recept, ReceptAdd } from 'src/app/store/types/recept';
 import { ReceptStateInterface, ReceptiUserStateInterface } from 'src/app/store/types/recept.interface';
+import { User } from 'src/app/store/types/user';
+import { UserSingleInterface } from 'src/app/store/types/user.interface';
 
 @Component({
   selector: 'app-profile',
@@ -15,16 +19,19 @@ import { ReceptStateInterface, ReceptiUserStateInterface } from 'src/app/store/t
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  imageSrc: string = '';
-  prezime: string = '';
-  ime: string = '';
   id:number=0;
-  username: string = '';
+  user$: Observable<User|null>;
+  isLoading$: Observable<boolean>;
+  error$:Observable<string | null>;
   isOpen:boolean=false;
+  isOpen2:boolean=false;
   imeRecept:string='';
   opisRecept:string='';
   recepti$:Observable<Recept[]>
   downloadURLs:string[]=[];
+  downloadURL:string='';
+  file:File | null=null;
+  form:FormGroup;
   files:File[]=[];
   dodajForm = this.fb.group({
     imeRecept: new FormControl('', Validators.required),
@@ -40,19 +47,25 @@ export class ProfileComponent implements OnInit {
   slikeForm = this.fb.group({
     inputslika:new FormControl(null,Validators.required)
   });
-  constructor(private storage: AngularFireStorage,private receptService:ReceptService,private store: Store<ReceptiUserStateInterface>,private fb: FormBuilder){
+  constructor(private storage: AngularFireStorage,private receptService:ReceptService,private store: Store<ReceptiUserStateInterface>,private store2: Store<UserSingleInterface>,private fb: FormBuilder){
     this.recepti$=this.store.select(selectorReceptiZaUsera)
+    this.user$=this.store2.select(selectorUser)
+    this.isLoading$=this.store2.select(selectorLoadingSingleUser);
+    this.error$=this.store2.select(selectorErrorSingleUser);
+    this.form = new FormGroup({
+      ime: new FormControl('', Validators.required),
+      prezime: new FormControl('', Validators.required),
+      username:new FormControl('', Validators.required),
+      slika:new FormControl(null,Validators.required)
+    });
   }
   ngOnInit(): void {
     const userLocal = localStorage.getItem('loggedUser');
     
     if (userLocal) {
       const userdata = JSON.parse(userLocal);
-      this.imageSrc = userdata.slika;
-      this.ime = userdata.ime;
       this.id=userdata.id;
-      this.prezime = userdata.prezime;
-      this.username = userdata.username;
+      this.store.dispatch(vratiUsera({id:this.id}));
       this.store.dispatch(vratiRecepteZaUsera({id:userdata.id}))
     }
     
@@ -63,6 +76,12 @@ export class ProfileComponent implements OnInit {
     this.isOpen = !this.isOpen;
     if (!this.isOpen) {
       this.dodajForm.reset();
+    }
+  }
+  toggleForm2() {
+    this.isOpen2 = !this.isOpen2;
+    if (!this.isOpen2) {
+      this.form.reset();
     }
   }
   async dodaj() {
@@ -78,7 +97,6 @@ export class ProfileComponent implements OnInit {
       .pipe(
         finalize(async () => {
           this.downloadURLs.push(await fileRef.getDownloadURL().toPromise());
-          console.log("zoran");
           completedUploads++;
 
           if (completedUploads === this.files.length) {
@@ -90,6 +108,7 @@ export class ProfileComponent implements OnInit {
             });
             const recept=new ReceptAdd(this.id,this.dodajForm.value.imeRecept!!,this.dodajForm.value.opis!!,this.dodajForm.value.priprema!!,nizSastojaka,this.downloadURLs);
             this.store.dispatch(kreirajRecept({recept}));
+            this.toggleForm();
           }
         })
       )
@@ -143,6 +162,36 @@ export class ProfileComponent implements OnInit {
   onFileChange(event: any) {
     const file = event.target.files[0];
     this.files?.push(file);
+  }
+  izbrisi(id:number|undefined){
+    if(id!=undefined){
+      this.store.dispatch(izbrisiRecept({id}));
+    }
+  }
+  updateProfile(){
+    if (this.form.valid) {
+      const{slika,...bezslike}=this.form.value;
+      const filePath = `profile_pictures/${Date.now()}_${this.file?.name}`;
+      const fileRef = this.storage.ref(filePath);
+      const uploadTask = this.storage.upload(filePath, this.file);
+
+      uploadTask.snapshotChanges().pipe(
+        finalize(async () => {
+          this.downloadURL = await fileRef.getDownloadURL().toPromise();
+          const payloadUpdate={
+            id:this.id,
+            ...bezslike,
+            slika:this.downloadURL
+          }
+          this.store2.dispatch(updateUser({user:payloadUpdate}))
+          this.toggleForm2(); 
+        })
+      ).subscribe();
+    }
+  }
+  onFileChange2(event: any) {
+    const file = event.target.files[0];
+    this.file=file;
   }
 //   const sastojciControls = this.sastojci.controls;
 //     const sastojciValues = sastojciControls.map(control => control.value);

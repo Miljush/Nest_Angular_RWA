@@ -22,7 +22,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { reducers } from './store/reducers/user.reducers';
+import { reducers, userSingleReducers } from './store/reducers/user.reducers';
 import { UserEffects } from './store/effects/user.effects';
 import { ReceptDetaljnoComponent } from './components/recept-detaljno/recept-detaljno.component';
 import { SwiperComponent } from './components/swiper/swiper.component';
@@ -55,7 +55,7 @@ import { ReviewEffects } from './store/effects/review.effects';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     FlexLayoutModule,
-    StoreModule.forRoot({user:reducers,recept:receptReducers,Singlerecept:receptSingleReducers,review:reviewReducers,receptZaUsera:recptiZaUseraReducers}),
+    StoreModule.forRoot({user:reducers,recept:receptReducers,Singlerecept:receptSingleReducers,review:reviewReducers,receptZaUsera:recptiZaUseraReducers,usersingle:userSingleReducers}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([UserEffects,ReceptEffects,ReviewEffects]),
   ],

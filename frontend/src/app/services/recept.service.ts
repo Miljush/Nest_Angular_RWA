@@ -39,4 +39,9 @@ export class ReceptService {
       withCredentials: true, 
     })
   }
+  izbrisiRecept(id:number):Observable<Recept>{
+    return this.http.delete<Recept>(`http://localhost:3000/recept/izbrisiRecept/${id}`,{
+      withCredentials:true
+    })
+  }
 }

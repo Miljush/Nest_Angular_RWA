@@ -6,3 +6,8 @@ export interface UserStateInterface extends EntityState<User>{
     error:string|null;
     isLoggedIn:boolean;
 }
+export interface UserSingleInterface {
+    user:User|null;
+    isLoading:boolean;
+    error:string|null;
+}

@@ -48,3 +48,15 @@ export const kreirajReceptFailure=createAction(
     '[ProfileKreiraj Page] KreirajRecept Recept failure',
     props<{error:string}>()
 )
+export const izbrisiRecept=createAction(
+    '[ProfileBrisi Page] IzbrisiRecept Recept',
+    props<{id:number}>()
+)
+export const izbrisiReceptSuccess=createAction(
+    '[ProfileBrisi Page] IzbrisiRecept Recept success',
+    props<{id:number}>()
+)
+export const izbrisiReceptFailure=createAction(
+    '[ProfileBrisi Page] IzbrisiRecept Recept failure',
+    props<{error:string}>()
+)

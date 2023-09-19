@@ -99,3 +99,36 @@ form {
 .dodajForm-control {
   margin-bottom: 20px;
 }
+.delete-button {
+  background-color: #e74c3c; /* Red background color */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 50%; /* Makes the button round */
+  width: 30px; /* Adjust the width and height as needed */
+  height: 30px;
+  font-size: 18px; /* Adjust the font size as needed */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Optional: Center the button text vertically and horizontally */
+.delete-button span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+.close-button {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 24px !important;
+  cursor: pointer !important;
+  color: red !important; /* You can change the color as needed */
+  padding: 0 !important;
+}

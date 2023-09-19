@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards,UseInterceptors,Request  } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards,UseInterceptors,Request, Param, Put  } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../models/user.entity';
-import { LoginDto } from '../dto/loginDto';
+import { LoginDto, updateUserDto } from '../dto/loginDto';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
@@ -19,8 +19,8 @@ export class UserController {
     vratiSveUsere(){
         return this.userService.vratiSveUsere();
     }
-    @Get('vratiUsera')
-    vratiUsera(@Body() id:number){
+    @Get('vratiUsera/:id')
+    vratiUsera(@Param('id') id:number){
         return this.userService.vratiUsera(id);
     }
     @Get('vratiUseraZaCookie')
@@ -57,5 +57,11 @@ export class UserController {
     response.clearCookie('jwt'); 
     return { message: 'logged out' };
   }
+  @Put('updateUser')
+    lajkujReceptt(
+        @Body() updateUser: updateUserDto
+    ){
+        return this.userService.updateUser(updateUser);
+    }
 
 }

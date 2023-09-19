@@ -48,3 +48,34 @@ body{
   .end-button {
     align-self: flex-end;
   }
+  .update-button {
+    background-color: #4caf50; /* Green background color */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding around the text */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth hover effect */
+  }
+  
+  /* Hover effect for the update button */
+  .update-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  /* Optional: Center the button text vertically and horizontally */
+  .update-button span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
+  .form-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  .form-container.open {
+    max-height: 1000px; /* Adjust the maximum height as needed */
+  }

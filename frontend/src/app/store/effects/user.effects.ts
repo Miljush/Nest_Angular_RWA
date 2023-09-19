@@ -81,6 +81,30 @@ export class UserEffects{
           catchError((error) => of(UserActions.refreshUserFailure({ error })))
         )
       );
+      vratiUsera$ = createEffect(()=>
+      this.actions$.pipe(
+        ofType(UserActions.vratiUsera),
+        mergeMap((action)=> {
+            return this.userService.vratiUseraZaId(action.id).pipe(
+                map((user)=>UserActions.vratiUseraSuccess({user:user})),
+                catchError((error)=>
+                of(UserActions.vratiUseraFailure({error: error.message})))
+            )
+        })
+    )
+    )
+    updateUser$ = createEffect(()=>
+      this.actions$.pipe(
+        ofType(UserActions.updateUser),
+        mergeMap((action)=> {
+            return this.userService.updateUser(action.user.id,action.user.ime,action.user.prezime,action.user.username,action.user.slika).pipe(
+                map((user)=>UserActions.updateUserSuccess({user:user})),
+                catchError((error)=>
+                of(UserActions.updateUserFailure({error: error.message})))
+            )
+        })
+    )
+    )
 
 
     constructor(private actions$: Actions, private authService:AuthenticationService,private router: Router,private userService:UserService ) {}

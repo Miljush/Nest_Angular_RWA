@@ -16,13 +16,13 @@
     <div class="card">
         <div class="card-body">
             
-            <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-6">
+            <div class="row" style="display: flex;">
+                <div class="col-lg-5 ">
                   <div class="container">
                     <app-swiper [images]="imageUrls" (imageChanged)="handleImageChanged($event)"></app-swiper>
                   </div>
                 </div>
-                <div class="col-lg-7 col-md-7 col-sm-6">
+                <div class="col-lg-7 col-md-5 col-sm-5">
                     <h2 class="box-title mt-5">{{(recept$ | async)?.ime}}</h2>
                     <p>{{(recept$ | async)?.opis}}</p>
                     <h2 class="mt-5">
@@ -91,8 +91,12 @@
                               </form>
                             </div>
                               <div *ngFor="let review of reviews$ | async" class="card mb-3">
-                                <div class="card-body p-4">
-                                  <div class="d-flex flex-start">
+                                <div class="card-body p-4">          
+                                  <div class="d-flex flex-start position-relative">
+                                    <!-- <div *ngIf='review.user.username == usernameuser'>
+                                      <button  class="position-absolute top-0 end-0 m-2 update-button"  (click)="toggleForm()" >Azuriraj</button>
+                                    </div> -->
+                                    
                                     <img class="rounded-circle shadow-1-strong me-3"
                                       [src]="review.user.slika"
                                       alt="review.user.photo"
@@ -100,6 +104,7 @@
                                       height="60"
                                       style="object-fit: cover;" />
                                     <div>
+                                      
                                       <h5 class="fw-bold mb-1">{{ review.user.ime }} {{review.user.prezime}}</h5>
                                       <div class="d-flex align-items-center mb-3">
                                         <p class="mb-0">
@@ -119,6 +124,32 @@
                                       </div>
 
                                       <p class="mb-0">{{ review.komentar }}</p>
+                                      <div  class="form-container" [ngClass]="{'open': isOpen}">
+                                        <form  [formGroup]="azurirajForm" (submit)="azurirajKomentar(review.id)" autocomplete="new-password">
+
+                                          <div class="azurirajForm-control">
+                                            <label for="ocenaKomentar">Ocena</label>
+                                            <input
+                                              formControlName="ocenaKomentar"
+                                              id="ocenaKomentar"
+                                              autocomplete="new-password"
+                                            />
+                                          </div>
+                                      
+                                          <div class="azurirajForm-control">
+                                            <label for="komentarKomentar">Komentar</label>
+                                            <textarea
+                                              formControlName="komentarKomentar"
+                                              id="komentarKomentar"
+                                              autocomplete="new-password"
+                                            ></textarea>
+                                          </div>
+                                          <button type="submit" class="btn btn-success end-button">
+                                            Send 
+                                          </button>
+                                        </form>
+                                      </div>
+                                      
                                     </div>
                                   </div>
                                 </div>

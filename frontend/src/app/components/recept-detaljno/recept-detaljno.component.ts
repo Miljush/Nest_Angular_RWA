@@ -26,7 +26,10 @@ export class ReceptDetaljnoComponent implements OnInit {
   imageUrls:string[]=[];
   receptId:number=0;
   userId:number=0;
+  usernameuser:string='';
   form:FormGroup;
+  azurirajForm:FormGroup;
+  isOpen:boolean=false;
 
   constructor(private route: ActivatedRoute, private receptService: ReceptService,private reviewService:ReviewService,private store: Store<ReceptSingleStateInterface>,private store2: Store<ReceptSingleStateInterface>) {
     this.recept$=this.store.select(selectorRecept)
@@ -39,6 +42,10 @@ export class ReceptDetaljnoComponent implements OnInit {
     this.form = new FormGroup({
       komentar: new FormControl('', Validators.required),
       starRating:new FormControl(null,Validators.required)
+    });
+    this.azurirajForm=new FormGroup({
+      komentarKomentar: new FormControl('', Validators.required),
+      ocenaKomentar:new FormControl(null,Validators.required)
     });
    }
 
@@ -57,8 +64,20 @@ export class ReceptDetaljnoComponent implements OnInit {
       const userdata = JSON.parse(userLocal);
       this.imageSrc = userdata.slika;
       this.userId=userdata.id
+      this.usernameuser=userdata.username
     }
     
+  }
+  toggleForm() {
+    this.isOpen = !this.isOpen;
+    if (!this.isOpen) {
+      this.azurirajForm.reset();
+    }
+  }
+  azurirajKomentar(id:number|undefined){
+    if(id!=undefined){
+      console.log(this.azurirajForm.value);
+    }
   }
   handleImageChanged(imageUrl: string) {
     console.log('New image selected:', imageUrl);

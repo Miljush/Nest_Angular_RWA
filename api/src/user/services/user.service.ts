@@ -3,7 +3,7 @@ import { UserEntity } from '../models/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { LoginDto } from '../dto/loginDto';
+import { LoginDto, updateUserDto } from '../dto/loginDto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -63,6 +63,15 @@ export class UserService {
         }
         return undefined;
     
+    }
+    async updateUser(updateUser:updateUserDto){
+        let user=await this.userRepository.findOneById(updateUser.id);
+        user.ime=updateUser.ime;
+        user.prezime=updateUser.prezime;
+        user.username=updateUser.username;
+        user.slika=updateUser.slika;
+        this.userRepository.update(updateUser.id,user)
+        return user;
     }
 
 

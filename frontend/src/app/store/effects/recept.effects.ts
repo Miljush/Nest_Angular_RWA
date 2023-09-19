@@ -53,6 +53,16 @@ export class ReceptEffects{
         ))
     )
     )
+    izbrisiRecept$ = createEffect(()=>
+    this.actions$.pipe(
+        ofType(ReceptActions.izbrisiRecept),
+        mergeMap((action)=>this.receptService.izbrisiRecept(action.id).pipe(
+            map((id)=>ReceptActions.izbrisiReceptSuccess({id:action.id})),
+            catchError((error)=>
+            of(ReceptActions.izbrisiReceptFailure({error: error.message})))
+        ))
+    )
+    )
 
 
     constructor(private actions$: Actions,private receptService: ReceptService,private router: Router){}

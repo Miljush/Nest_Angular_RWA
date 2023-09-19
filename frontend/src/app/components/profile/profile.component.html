@@ -7,27 +7,73 @@
             <div
               class="media align-items-end profile-head"
               style="padding-bottom: 10px"
+              *ngIf="!isOpen2"
             >
               <div
                 class="profile mr-3"
                 style="display: flex; flex-direction: column"
               >
                 <img
-                  [src]="imageSrc"
+                  [src]='(user$ | async)?.slika'
                   alt="..."
                   width="130"
                   class="rounded mb-2 img-thumbnail"
-                /><button href="#" class="btn-book-a-table">
+                />
+                <button href="#" class="btn-book-a-table" (click)="toggleForm2()">
                   Izmeni profil
                 </button>
               </div>
               <div class="media-body mb-5 text-white">
-                <h4 class="mt-0 mb-0">{{ime}} {{prezime}}</h4>
+                <h4 class="mt-0 mb-0">{{(user$ | async)?.ime}} {{(user$ | async)?.prezime}}</h4>
                 <p class="small mb-4">
-                  <i class="fas fa-map-marker-alt mr-2"></i>{{username}}
+                  <i class="fas fa-map-marker-alt mr-2"></i>{{(user$ | async)?.username}}
                 </p>
               </div>
             </div>
+            <div  class="form-container" [ngClass]="{'open': isOpen2}">
+            <form [formGroup]="form" (submit)="updateProfile()" autocomplete="new-password" style="position: relative;">
+              <h1>Update</h1>
+              <button class="close-button" (click)="toggleForm2()">&#10006;</button>
+              <div class="form-control">
+                <label for="ime">Ime</label>
+                <input
+                  formControlName="ime"
+                  id="ime"
+                  autocomplete="new-password"
+                />
+              </div>
+            
+              <div class="form-control">
+                <label for="prezime">Prezime</label>
+                <input
+                  formControlName="prezime"
+                  id="prezime"
+                  autocomplete="new-password"
+                />
+              </div>
+          
+              <div class="form-control">
+                  <label for="username">Username</label>
+                  <input
+                    formControlName="username"
+                    id="username"
+                    autocomplete="new-password"
+                  />
+                </div>   
+              <div class="form-control">
+                  <label for="slika">Slika</label>
+                  <input
+                  style="height: 50px;"
+                    formControlName="slika"
+                    id="slika"
+                    type="file"
+                    (change)="onFileChange2($event)"
+                  />
+              </div>
+
+              <button class="btn-book-a-table" type="submit">Izmeni &#8594;</button>
+            </form>
+          </div>
           </div>
           <div class="bg-light p-4 d-flex justify-content-end text-center">
             <ul class="list-inline mb-0">
@@ -37,26 +83,14 @@
                   <i class="fas fa-image mr-1"></i>Recepata</small
                 >
               </li>
-              <li class="list-inline-item">
-                <h5 class="font-weight-bold mb-0 d-block">745</h5>
-                <small class="text-muted">
-                  <i class="fas fa-user mr-1"></i>Followers</small
-                >
-              </li>
-              <li class="list-inline-item">
-                <h5 class="font-weight-bold mb-0 d-block">340</h5>
-                <small class="text-muted">
-                  <i class="fas fa-user mr-1"></i>Following</small
-                >
-              </li>
+              
             </ul>
           </div>
           <div class="px-4 py-3">
-            <h5 class="mb-0">About</h5>
             <div class="p-4 rounded shadow-sm bg-light">
-              <p class="font-italic mb-0">Web Developer</p>
-              <p class="font-italic mb-0">Lives in New York</p>
-              <p class="font-italic mb-0">Photographer</p>
+              <p class="font-italic mb-0">Vaš profil</p>
+              <p class="font-italic mb-0">sa vašim</p>
+              <p class="font-italic mb-0">Receptima</p>
             </div>
           </div>
           <div>
@@ -132,13 +166,15 @@
               </div>
           </div>
             <div class="row">
-                <div style="padding-bottom: 10px;" class="col-lg-6 mb-2 pr-lg-1" *ngFor="let recept of (recepti$ | async)">
-                  <img
-                    [src]="recept.slike?.[0]"
-                    alt=""
-                    class="img-fluid rounded shadow-sm cropped-image"
-                  />
-                </div>
+              <div style="padding-bottom: 10px; position: relative;" class="col-lg-6 mb-2 pr-lg-1" *ngFor="let recept of (recepti$ | async)">
+                <button (click)="izbrisi(recept.id)" style="position: absolute; top: 0; left: 2;" class="delete-button">X</button>
+                <img
+                  [src]="recept.slike?.[0]"
+                  id="recept.id"
+                  alt=""
+                  class="img-fluid rounded shadow-sm cropped-image"
+                />
+              </div>
               </div>
           </div>
         </div>

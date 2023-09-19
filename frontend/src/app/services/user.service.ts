@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
+import { User } from '../store/types/user';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,23 @@ export class UserService {
   }
   vratiUsera(){
     return this.http.get<any>('http://localhost:3000/user/vratiUsera')
+  }
+  vratiUseraZaId(id:number){
+    return this.http.get<User>(`http://localhost:3000/user/vratiUsera/${id}`,{
+      withCredentials:true
+    })
+  }
+  updateUser(id:number,ime:string,prezime:string,username:string,slika:string){
+    const payload={
+      id:id,
+      ime:ime,
+      prezime:prezime,
+      username:username,
+      slika:slika
+    }
+    return this.http.put<User>(`http://localhost:3000/user/updateUser`,payload,{
+      withCredentials:true
+    })
   }
 }
 
