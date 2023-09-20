@@ -23,6 +23,6 @@ export class UserModule implements NestModule {
     consumer
       .apply(RoleMiddleware)
       .forRoutes({ path: 'user/vratiSveUsere', method: RequestMethod.GET },
-      { path: 'user/vratiUsera', method: RequestMethod.GET });
+      { path: 'user/vratiUsera/:id', method: RequestMethod.GET });
   }
 }

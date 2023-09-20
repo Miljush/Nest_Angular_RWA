@@ -58,6 +58,7 @@ export class UserService {
       username:username,
       slika:slika
     }
+
     return this.http.put<User>(`http://localhost:3000/user/updateUser`,payload,{
       withCredentials:true
     })

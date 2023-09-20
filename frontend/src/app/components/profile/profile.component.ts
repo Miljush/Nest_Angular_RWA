@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, finalize } from 'rxjs';
 import { ReceptService } from 'src/app/services/recept.service';
 import { vratiRecepteZaUsera,kreirajRecept, izbrisiRecept } from 'src/app/store/actions/recept.actions';
@@ -32,6 +33,7 @@ export class ProfileComponent implements OnInit {
   downloadURL:string='';
   file:File | null=null;
   form:FormGroup;
+  token:string|null='';
   files:File[]=[];
   dodajForm = this.fb.group({
     imeRecept: new FormControl('', Validators.required),
@@ -47,11 +49,12 @@ export class ProfileComponent implements OnInit {
   slikeForm = this.fb.group({
     inputslika:new FormControl(null,Validators.required)
   });
-  constructor(private storage: AngularFireStorage,private receptService:ReceptService,private store: Store<ReceptiUserStateInterface>,private store2: Store<UserSingleInterface>,private fb: FormBuilder){
+  constructor(private storage: AngularFireStorage,private receptService:ReceptService,private store: Store<ReceptiUserStateInterface>,private store2: Store<UserSingleInterface>,private fb: FormBuilder,private cookieService: CookieService){
     this.recepti$=this.store.select(selectorReceptiZaUsera)
     this.user$=this.store2.select(selectorUser)
     this.isLoading$=this.store2.select(selectorLoadingSingleUser);
     this.error$=this.store2.select(selectorErrorSingleUser);
+   
     this.form = new FormGroup({
       ime: new FormControl('', Validators.required),
       prezime: new FormControl('', Validators.required),
@@ -60,6 +63,7 @@ export class ProfileComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    
     const userLocal = localStorage.getItem('loggedUser');
     
     if (userLocal) {

@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post,Put,Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post,Put,Delete, UseGuards } from '@nestjs/common';
 import { ReceptifeedService } from '../services/recept.service';
 import { CreateReceptDto } from '../dto/createreceptdto';
 import { ReceptPostEntity } from '../models/recept.entity';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('recept')
 export class ReceptifeedController {
@@ -21,6 +22,7 @@ export class ReceptifeedController {
     vratiRecept(@Param('id') id:number){
         return this.receptService.vratiRecept(id);
     }
+    @UseGuards(JwtAuthGuard)
     @Get('vratiRecepteZaUsera/:id')
     vratiRecepteZaUsera(@Param('id') id:number){
         return this.receptService.vratiRecepteZaUsera(id);

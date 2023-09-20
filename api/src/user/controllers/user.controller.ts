@@ -5,6 +5,7 @@ import { LoginDto, updateUserDto } from '../dto/loginDto';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
+import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -45,11 +46,12 @@ export class UserController {
             }
         
     }
-    @UseGuards(AuthGuard('local'))
+
+    @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@Body() loginDto:LoginDto,@Res({ passthrough: true }) response: Response){
        const token=await this.userService.login(loginDto);
-       response.cookie('jwt',token,{httpOnly:true});
+       response.cookie('jwt',token,{httpOnly:false});
        return {message:'success'}
     }
     @Post('logout')
