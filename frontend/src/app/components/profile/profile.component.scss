@@ -1,0 +1,134 @@
+.profile-head {
+  transform: translateY(5rem)
+}
+
+.cover {
+  background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
+  background-size: cover;
+  background-repeat: no-repeat
+}
+
+body {
+  background: #654ea3;
+  background: linear-gradient(to right, #e96443, #904e95);
+  min-height: 100vh;
+  overflow-x:hidden;
+}
+.btn-book-a-table,
+.header .btn-book-a-table:focus {
+  font-size: 14px;
+  color: #fff;
+  background: #FFA700;
+  padding: 8px 20px;
+  border-radius: 50px;
+  transition: 0.3s;
+  width: 11%;
+}
+.cropped-image {
+  width: 600px;
+  height: 300px; /* Adjust this value to the desired height */
+  object-fit: cover;
+}
+@mixin focus {
+  &:focus {
+    outline-offset: 2px;
+    outline: 2px solid #07c;
+  }
+}
+
+form {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 16px 16px 24px;
+  box-shadow: 0 2px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+
+  h1 {
+    margin-top: 0;
+    color: #555;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.dodajForm-control {
+  margin-bottom: 16px;
+  input,
+  label {
+    display: block;
+  }
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  input {
+    padding: 8px;
+    height: 35px;
+    border-radius: 4px;
+    width: 95%;
+    border: 2px solid #ccc;
+    background-color: white;
+
+    @include focus;
+  }
+}
+.btn-book-a-tablee,
+.btn-book-a-tablee:focus {
+  font-size: 14px;
+  color: #fff;
+  background: #FFA700;
+  padding: 8px 20px;
+  border-radius: 50px;
+  transition: 0.3s;
+  width: 100%;
+}
+.form-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.form-container.open {
+  max-height: 1000px; /* Adjust the maximum height as needed */
+}
+
+/* Other styles for your form elements */
+.dodajForm-control {
+  margin-bottom: 20px;
+}
+.delete-button {
+  background-color: #e74c3c; /* Red background color */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 50%; /* Makes the button round */
+  width: 30px; /* Adjust the width and height as needed */
+  height: 30px;
+  font-size: 18px; /* Adjust the font size as needed */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Optional: Center the button text vertically and horizontally */
+.delete-button span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+.close-button {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 24px !important;
+  cursor: pointer !important;
+  color: red !important; /* You can change the color as needed */
+  padding: 0 !important;
+}

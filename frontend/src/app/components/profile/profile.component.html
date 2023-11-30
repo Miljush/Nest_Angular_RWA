@@ -1,0 +1,184 @@
+<div style="margin-top: 60px">
+  <div class="container">
+    <div class="py-5 px-4">
+      <div class="">
+        <div class="bg-white shadow rounded overflow-hidden">
+          <div class="px-4 pt-0 pb-4 cover">
+            <div
+              class="media align-items-end profile-head"
+              style="padding-bottom: 10px"
+              *ngIf="!isOpen2"
+            >
+              <div
+                class="profile mr-3"
+                style="display: flex; flex-direction: column"
+              >
+                <img
+                  [src]='(user$ | async)?.slika'
+                  alt="..."
+                  width="130"
+                  class="rounded mb-2 img-thumbnail"
+                />
+                <button href="#" class="btn-book-a-table" (click)="toggleForm2()">
+                  Izmeni profil
+                </button>
+              </div>
+              <div class="media-body mb-5 text-white">
+                <h4 class="mt-0 mb-0">{{(user$ | async)?.ime}} {{(user$ | async)?.prezime}}</h4>
+                <p class="small mb-4">
+                  <i class="fas fa-map-marker-alt mr-2"></i>{{(user$ | async)?.username}}
+                </p>
+              </div>
+            </div>
+            <div  class="form-container" [ngClass]="{'open': isOpen2}">
+            <form [formGroup]="form" (submit)="updateProfile()" autocomplete="new-password" style="position: relative;">
+              <h1>Update</h1>
+              <button class="close-button" (click)="toggleForm2()">&#10006;</button>
+              <div class="form-control">
+                <label for="ime">Ime</label>
+                <input
+                  formControlName="ime"
+                  id="ime"
+                  autocomplete="new-password"
+                />
+              </div>
+            
+              <div class="form-control">
+                <label for="prezime">Prezime</label>
+                <input
+                  formControlName="prezime"
+                  id="prezime"
+                  autocomplete="new-password"
+                />
+              </div>
+          
+              <div class="form-control">
+                  <label for="username">Username</label>
+                  <input
+                    formControlName="username"
+                    id="username"
+                    autocomplete="new-password"
+                  />
+                </div>   
+              <div class="form-control">
+                  <label for="slika">Slika</label>
+                  <input
+                  style="height: 50px;"
+                    formControlName="slika"
+                    id="slika"
+                    type="file"
+                    (change)="onFileChange2($event)"
+                  />
+              </div>
+
+              <button class="btn-book-a-table" type="submit">Izmeni &#8594;</button>
+            </form>
+          </div>
+          </div>
+          <div class="bg-light p-4 d-flex justify-content-end text-center">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <h5 class="font-weight-bold mb-0 d-block">{{(recepti$ | async)?.length}}</h5>
+                <small class="text-muted">
+                  <i class="fas fa-image mr-1"></i>Recepata</small
+                >
+              </li>
+              
+            </ul>
+          </div>
+          <div class="px-4 py-3">
+            <div class="p-4 rounded shadow-sm bg-light">
+              <p class="font-italic mb-0">Vaš profil</p>
+              <p class="font-italic mb-0">sa vašim</p>
+              <p class="font-italic mb-0">Receptima</p>
+            </div>
+          </div>
+          <div>
+            
+          </div>
+          <div class="py-4 px-4">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h5 class="mb-0">Poslednji recepti</h5>
+              <button class="btn btn-link text-muted" (click)="toggleForm()">Dodaj Recept</button>
+              
+            </div>
+            <div>
+              <div  class="form-container" [ngClass]="{'open': isOpen}">
+                <form  [formGroup]="dodajForm" autocomplete="new-password">
+                  <h1>Novi recept</h1>
+                  
+                  <div class="dodajForm-control">
+                    <label for="imeRecept">Ime</label>
+                    <input
+                      formControlName="imeRecept"
+                      id="imeRecept"
+                      autocomplete="new-password"
+                    />
+                  </div>
+              
+                  <div class="dodajForm-control">
+                    <label for="opis">Opis</label>
+                    <textarea
+                      formControlName="opis"
+                      id="opis"
+                      autocomplete="new-password"
+                    ></textarea>
+                  </div>
+                  <div>
+                    Sastojci
+                  </div>
+                  <ng-container formArrayName="sastojci">
+                    <ng-container *ngFor="let sastojciForm of sastojci.controls; let index = index">
+                        <div [formGroupName]="index">
+                        <input id="imesastojka" type="text" formControlName="imesastojka" />  
+                        <button class="btn btn-link text-muted" (click)="removeSastojci(index)">Ukloni</button>          
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <button class="btn btn-link text-muted" type="button" (click)="addSastojci()">Dodaj sastojak</button>
+              
+                  <div class="dodajForm-control">
+                    <label for="priprema">Priprema</label>
+                    <textarea
+                      formControlName="priprema"
+                      id="priprema"
+                      autocomplete="new-password"
+                    ></textarea>
+                  </div>
+                  <ng-container formArrayName="slike">
+                    <ng-container *ngFor="let slikeForm of slike.controls; let index = index">
+                        <div [formGroupName]="index">
+                        <input id="inputslika" type="file" (change)="onFileChange($event)" formControlName="inputslika" />  
+                        <button class="btn btn-link text-muted" (click)="removeSlike(index)">Ukloni</button>          
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <div style="display: flex; flex-direction: column;">
+                  <div>
+                  <button class="btn btn-link text-muted" type="button" (click)="addSlike()">Dodaj Sliku</button>
+                  </div>
+
+
+                  <button class="btn-book-a-tablee" (click)="dodaj()">Kreiraj Recept</button>
+                </div>
+                  
+                </form>
+              </div>
+          </div>
+            <div class="row">
+              <div style="padding-bottom: 10px; position: relative;" class="col-lg-6 mb-2 pr-lg-1" *ngFor="let recept of (recepti$ | async)">
+                <button (click)="izbrisi(recept.id)" style="position: absolute; top: 0; left: 2;" class="delete-button">X</button>
+                <img
+                  [src]="recept.slike?.[0]"
+                  id="recept.id"
+                  alt=""
+                  class="img-fluid rounded shadow-sm cropped-image"
+                />
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

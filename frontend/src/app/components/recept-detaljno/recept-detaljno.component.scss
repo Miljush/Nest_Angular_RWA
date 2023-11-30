@@ -1,0 +1,81 @@
+body{
+    background-color: #edf1f5;
+    margin-top:20px;
+}
+.card {
+    margin-bottom: 30px;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid transparent;
+    border-radius: 0;
+}
+.card .card-subtitle {
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: #8898aa;
+}
+.table-product.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f3f8fa!important
+}
+.table-product td{
+    border-top: 0px solid #dee2e6 !important;
+    color: #728299!important;
+}
+.image-container {
+    width: 430px;
+    height: 600px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .link-muted { color: #aaa; } .link-muted:hover { color: #1266f1; }
+  .end-button {
+    align-self: flex-end;
+  }
+  .update-button {
+    background-color: #4caf50; /* Green background color */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding around the text */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth hover effect */
+  }
+  
+  /* Hover effect for the update button */
+  .update-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  /* Optional: Center the button text vertically and horizontally */
+  .update-button span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
+  .form-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  .form-container.open {
+    max-height: 1000px; /* Adjust the maximum height as needed */
+  }

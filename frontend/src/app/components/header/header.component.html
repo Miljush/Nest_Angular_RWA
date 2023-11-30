@@ -1,0 +1,65 @@
+<!-- <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <div class="col-md-3 mb-2 mb-md-0">
+      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+    </div>
+
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+      <li><a href="#" class="nav-link px-2">Features</a></li>
+      <li><a href="#" class="nav-link px-2">Pricing</a></li>
+      <li><a href="#" class="nav-link px-2">FAQs</a></li>
+      <li><a href="#" class="nav-link px-2">About</a></li>
+    </ul>
+
+    <div class="col-md-3 text-end" *ngIf="!authenticated">
+      <button routerLink="/login" type="button" class="btn btn-outline-primary me-2">Login</button>
+      <button routerLink="/register" type="button" class="btn btn-outline-primary me-2">Register</button>
+    </div>
+    <div class="col-md-3 text-end" *ngIf="authenticated">
+      <button routerLink="/login" type="button" class="btn btn-outline-primary me-2" (click)="logout()">Logout</button>
+    </div>
+  </header> -->
+  <header id="header" class="header fixed-top d-flex align-items-center pozadina">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1>Ukus<span>.</span></h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="#hero">Glavna</a></li>
+          <li><a href="sviRecepti">Svi Recepti</a></li>
+          
+        </ul>
+      </nav><!-- .navbar -->
+      <div *ngIf="!(isLoggedIn$ | async)">
+        <button routerLink="/login" type="button" class="btn-book-a-table">Login</button>
+        <button routerLink="/register" type="button" class="btn-book-a-table">Register</button>
+      </div>
+      <div *ngIf="isLoggedIn$ | async" class="user-profile">
+        <div class="profile-container">
+          
+          <div class="dropdown">
+            <button class="dropbtn">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+              </svg>
+            </button>
+            <div class="dropdown-content">
+              <a href="profile">Profile</a>
+              <a href="javascript:void(0);" (click)="logout()">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>       
+      </div>
+    
+      
+      
+  
+  </header>

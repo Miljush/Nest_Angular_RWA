@@ -1,0 +1,16 @@
+
+<div style="padding-top: 130px; justify-content: center;" fxLayout="row wrap" fxLayoutGap="16px" class="pozadina">
+    <div *ngFor="let recept of recepts$ | async" class="recept-card" [routerLink]="['/recept', recept.id]">
+        <div class="image-container">
+            <img [src]="recept.slike?.[0]" alt="{{ recept.ime }}" />
+        </div>
+      <div class="recept-details">
+        <h2>{{ recept.ime }}</h2>
+        <p>{{ recept.opis }}</p>
+        <ul>
+          <li *ngFor="let sastojak of recept.sastojci">{{ sastojak }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div>

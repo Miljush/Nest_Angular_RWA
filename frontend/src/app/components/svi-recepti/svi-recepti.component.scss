@@ -1,0 +1,113 @@
+/* Default styles for larger screens */
+.recept-card {
+    width: 23%; /* Set to approximately 1/6 of the container width */
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .recept-card:hover {
+    transform: translateY(-10px) scale(1.05); /* Move the card up and increase its size */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Increase shadow size and darkness */
+  }
+
+  .recept-details p {
+    font-size: 1rem;
+    color: #555; /* Dark text color */
+    margin: 10px 0;
+  }
+  
+  /* Add a subtle shadow to the description */
+  .recept-details p {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Apply a hover effect to the description */
+  .recept-details p:hover {
+    transform: scale(1.02); /* Slight scale up on hover */
+    transition: transform 0.3s ease;
+  }
+  .recept-details h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #f39c12; /* Orange underline */
+    color: #333; /* Dark text color */
+    text-transform: uppercase; /* Convert to uppercase */
+  }
+
+  .recept-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  .recept-details li {
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 20px;
+    color: #555; /* Dark text color */
+  }
+  
+  .recept-details li:before {
+    content: '\2022'; /* Bullet point symbol */
+    position: absolute;
+    left: 0;
+    color: #f39c12; /* Orange bullet point color */
+    font-weight: bold;
+  }
+  
+  .recept-details li span {
+    color: #f39c12; /* Orange text color for ingredients */
+    font-weight: bold;
+  }
+
+  .image-container {
+    border-radius: 8px;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* Create a square aspect ratio (1:1) */
+    overflow: hidden;
+  }
+  
+  .image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the container without distortion */
+  }
+  
+  .recept-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .recept-details {
+    margin-top: 12px;
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .recept-card {
+      width: 33%; /* Set to approximately 1/3 of the container width */ /* Flex properties for flex layout */
+    }
+  }
+  
+  /* Media query for even smaller screens */
+  @media (max-width: 480px) {
+    .recept-card {
+      width: 50%; /* Set to approximately 1/2 of the container width */ /* Flex properties for flex layout */
+    }
+  }
+  .pozadina{
+    background-image: url('./../../../assets/img/helbac.jpg');
+    background-size: cover; /* Optional: Specify how the image should be sized */
+    background-position: center;
+  }
+  
